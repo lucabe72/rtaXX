@@ -20,3 +20,16 @@ template <typename ts, unsigned int r> struct r1<true, ts, r> {
 template <typename ts> struct response_time {
   enum {r = r1<false, ts, 1>::value};
 };
+
+template <typename ts> struct rta_check {
+  enum {r = response_time<ts>::r};
+  enum {d = ts::head::deadline};
+  static_assert(r < d, "Not schedulable!");
+  typedef struct rta_check<typename ts::tail> r1;
+  enum {r_1 = r1::r};
+};
+
+template <> struct rta_check<EmptyTS> {
+  enum {r = 0};
+};
+

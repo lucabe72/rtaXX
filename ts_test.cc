@@ -16,9 +16,9 @@ int main()
   std::cout << "P = " << t1::period << std::endl;
   std::cout << "D = " << t1::deadline << std::endl;
 
-  std::cout << "C = " << ts::head::execution_time << std::endl;
-  std::cout << "P = " << ts::head::period << std::endl;
-  std::cout << "D = " << ts::head::deadline << std::endl;
+  std::cout << "C = " << ts::car::execution_time << std::endl;
+  std::cout << "P = " << ts::car::period << std::endl;
+  std::cout << "D = " << ts::car::deadline << std::endl;
 
   p::print();
 

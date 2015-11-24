@@ -7,10 +7,9 @@ template <unsigned int c, unsigned int p, unsigned int d> struct task {
 
 struct EmptyTS {};
 
-template <typename T, typename L> struct TaskSet {
-//template <template <unsigned int c, unsigned int p, unsigned int d> struct task t, typename L> struct TaskSet {
-  typedef T head;
-  typedef L tail;
+template <typename head, typename tail> struct TaskSet {
+  typedef head car;
+  typedef tail cdr;
 };
 
 

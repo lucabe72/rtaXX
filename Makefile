@@ -4,6 +4,8 @@ TESTS=ceil_test rta_test ts_test
 
 all: $(TESTS)
 
+rta_test:: rta_test.o periodic_task.o
+
 clean:
 	rm -f *.d
 	rm -f *.o

@@ -5,9 +5,9 @@
 #include "ceil.hh"
 #include "rta.hh"
 
-typedef task<2, 4, 4> t1;
-typedef task<3, 15, 15> t2;
-typedef task<5, 28, 28> t3;
+typedef task<2000, 4000, 4000> t1;
+typedef task<3000, 15000, 15000> t2;
+typedef task<5000, 28000, 28000> t3;
 
 template<> void t1::job_body(void *)
 {
@@ -21,8 +21,8 @@ template<> void t3::job_body(void *)
 {
 }
 
-typedef struct TaskSet<t2, struct TaskSet<t1, struct TaskSet<t3, struct EmptyTS> > > ts;
-//typedef struct TaskSet<t3, struct TaskSet<t2, struct TaskSet<t1, struct EmptyTS> > > ts;
+//typedef struct TaskSet<t2, struct TaskSet<t1, struct TaskSet<t3, struct EmptyTS> > > ts;
+typedef struct TaskSet<t3, struct TaskSet<t2, struct TaskSet<t1, struct EmptyTS> > > ts;
 
 int main()
 {
@@ -35,7 +35,7 @@ int main()
   ts::start(&t);
 
   while(1);
-  //std::cout << c::r << std::endl;
+  std::cout << c::r << std::endl;
   return 0;
 }
 

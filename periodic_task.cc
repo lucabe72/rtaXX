@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <cstring>
 
+#include "periodic_task.hh"
 #include "taskset.hh"
 
 #define NSEC_PER_SEC 1000000000ULL
@@ -20,25 +21,22 @@ static inline void timespec_add_us(struct timespec *t, unsigned int d)
     t->tv_nsec = d;
 }
 
-template <unsigned int c, unsigned int p, unsigned int d>
-void task<c,p,d>::wait_next_activation(void)
+void task_instance::wait_next_activation(void)
 {
     clock_nanosleep(CLOCK_REALTIME, TIMER_ABSTIME, &r, NULL);
     timespec_add_us(&r, period);
 }
 
-template <unsigned int c, unsigned int p, unsigned int d>
-void *task<c,p,d>::task_body(void *parm)
+void *task_instance::task_body(void *parm)
 {
-  struct task<c,p,d> *t = reinterpret_cast<struct task<c,p,d> *>(p);
+  struct task_instance *t = reinterpret_cast<struct task_instance *>(parm);
 
   t->run();
 
   return NULL;
 }
 
-template <unsigned int c, unsigned int p, unsigned int d>
-void task<c,p,d>::run(void)
+void task_instance::run(void)
 {
   while(1) {
     wait_next_activation();
@@ -46,17 +44,28 @@ void task<c,p,d>::run(void)
   }
 }
 
+task_instance::task_instance(unsigned int p, struct timespec *t, void (*body)(void *a), void *arg)
+{
+  memcpy(&r, t, sizeof(struct timespec));  
+  period = p;
+  job_body = body;
+  job_arg = arg;
+}
+
+#if 0
 template <unsigned int c, unsigned int p, unsigned int d>
 int task<c,p,d>::start(struct timespec *activation_time, void *arg)
 {
   int res;
+  pthread_t tid;
+  struct task_instance *task;
 
-  memcpy(&r, activation_time, sizeof(struct timespec));
-  job_arg = arg;
-  res = pthread_create(&tid, NULL, task_body, (void *)this);
+  task = new struct task_instance(period, activation_time, job_body, arg);
+  res = pthread_create(&tid, NULL, task_instance::task_body, (void *)task);
   if (res) {
     return -1;
   }
 
   return 0;
 }
+#endif

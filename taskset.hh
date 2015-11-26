@@ -22,7 +22,7 @@ template <unsigned int c, unsigned int p, unsigned int d> struct task {
 };
 
 struct EmptyTS {
-  static void start(struct timespec *activation_time) {}
+  static void start(struct timespec * /*activation_time*/) {}
 };
 
 template <typename head, typename tail> struct TaskSet {

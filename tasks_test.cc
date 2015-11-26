@@ -9,15 +9,15 @@ typedef task<2, 4, 4> t1;
 typedef task<3, 15, 15> t2;
 typedef task<5, 28, 28> t3;
 
-template<> void t1::job_body(void *p)
+template<> void t1::job_body(void *)
 {
 }
 
-template<> void t2::job_body(void *p)
+template<> void t2::job_body(void *)
 {
 }
 
-template<> void t3::job_body(void *p)
+template<> void t3::job_body(void *)
 {
 }
 

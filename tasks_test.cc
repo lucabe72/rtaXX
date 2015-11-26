@@ -1,9 +1,10 @@
 #include <iostream>
-#include "periodic_task.hh"
 #include "taskset.hh"
 #include "taskset_io.hh"
 #include "ceil.hh"
 #include "rta.hh"
+#include "periodic_task.hh"
+#include "task_factory.hh"
 
 typedef task<20000, 40000, 40000> t1;
 typedef task<30000, 150000, 150000> t2;
@@ -55,11 +56,12 @@ int main()
 {
   typedef struct ts_print<ts> p;
   typedef struct rta_check<ts> c;
+  typedef struct task_factory<ts> fact;
   struct timespec t;
 
   p::print();
   clock_gettime(CLOCK_REALTIME, &t);
-  ts::start(&t, 10);
+  fact::start(&t, 10);
 
   while(1);
   std::cout << c::r << std::endl;

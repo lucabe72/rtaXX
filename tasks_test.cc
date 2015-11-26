@@ -5,20 +5,47 @@
 #include "ceil.hh"
 #include "rta.hh"
 
-typedef task<2000, 4000, 4000> t1;
-typedef task<3000, 15000, 15000> t2;
-typedef task<5000, 28000, 28000> t3;
+typedef task<20000, 40000, 40000> t1;
+typedef task<30000, 150000, 150000> t2;
+typedef task<50000, 280000, 280000> t3;
 
 template<> void t1::job_body(void *)
 {
+  int i,j;
+ 
+  for (i=0; i<3; i++) {
+    for (j=0; j<1000; j++) ;
+    printf("1");
+    fflush(stdout);
+  }
 }
 
 template<> void t2::job_body(void *)
 {
+  int i,j;
+
+  for (i=0; i<5; i++) {
+    for (j=0; j<10000; j++) ;
+    printf("2");
+    fflush(stdout);
+  }
 }
 
 template<> void t3::job_body(void *)
 {
+  static uint64_t previous;
+  uint64_t t;
+  struct timespec tv;
+
+  if (previous == 0) {
+    clock_gettime(CLOCK_REALTIME, &tv);
+    previous = tv.tv_sec * 1000ULL + tv.tv_nsec / 1000000ULL;
+  }
+
+  clock_gettime(CLOCK_REALTIME, &tv);
+  t = tv.tv_sec * 1000ULL + tv.tv_nsec / 1000000ULL;
+  printf("\tT: %llu\n", t - previous);
+  previous = t;
 }
 
 //typedef struct TaskSet<t2, struct TaskSet<t1, struct TaskSet<t3, struct EmptyTS> > > ts;

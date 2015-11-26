@@ -59,7 +59,7 @@ int main()
 
   p::print();
   clock_gettime(CLOCK_REALTIME, &t);
-  ts::start(&t);
+  ts::start(&t, 10);
 
   while(1);
   std::cout << c::r << std::endl;

@@ -15,4 +15,4 @@ clean:
 %.d: %.cc
 	$(CXX) -MM -MF $@ $<
 
-include ceil_test.d rta_test.d ts_test.d 
+include ceil_test.d rta_test.d ts_test.d tasks_test.d periodic_task.d

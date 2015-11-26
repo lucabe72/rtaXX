@@ -1,11 +1,11 @@
 LINK.o=$(CXX)
 CXXFLAGS=-Wall -Wextra -pedantic -Wno-enum-compare -std=c++0x
-TESTS=ceil_test rta_test ts_test
+TESTS=ceil_test rta_test ts_test tasks_test
 LDLIBS=-lrt
 
 all: $(TESTS)
 
-rta_test:: rta_test.o periodic_task.o
+tasks_test:: tasks_test.o periodic_task.o
 
 clean:
 	rm -f *.d

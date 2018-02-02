@@ -16,7 +16,7 @@ template<> void t1::job_body(void *)
  
   for (i=0; i<3; i++) {
     for (j=0; j<1000; j++) ;
-    printf("1");
+    std::cout << "1";
     fflush(stdout);
   }
 }
@@ -28,6 +28,7 @@ template<> void t2::job_body(void *)
   for (i=0; i<5; i++) {
     for (j=0; j<10000; j++) ;
     printf("2");
+    std::cout << "2";
     fflush(stdout);
   }
 }
@@ -45,7 +46,7 @@ template<> void t3::job_body(void *)
 
   clock_gettime(CLOCK_REALTIME, &tv);
   t = tv.tv_sec * 1000ULL + tv.tv_nsec / 1000000ULL;
-  printf("\tT: %llu\n", t - previous);
+  std::cout << "\tT: " << t - previous << std::endl;
   previous = t;
 }
 

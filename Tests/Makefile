@@ -1,5 +1,5 @@
 LINK.o=$(CXX) $(LDFLAGS)
-CXXFLAGS=-Wall -Wextra -pedantic -Wno-enum-compare -std=c++0x
+CXXFLAGS=-Wall -Wextra -pedantic -Wno-enum-compare -std=c++11
 LDFLAGS=-pthread
 TESTS=ceil_test rta_test ts_test tasks_test
 LDLIBS=-lrt
